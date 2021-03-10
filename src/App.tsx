@@ -1,10 +1,12 @@
 import './App.css';
-import { getEvent } from "./components/fetch";
+import { getEventById, getEvents } from "./components/events/eventFetch";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-      <button onClick={() => getEvent(1)}></button>
+      <button onClick = {async () => await getEvents()}></button>
+      <button onClick = {async () => await getEventById(1)}></button>
     </div>
   );
 }
