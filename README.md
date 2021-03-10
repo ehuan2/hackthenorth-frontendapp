@@ -26,3 +26,6 @@ query {
     related_events
   }
 }
+
+## Write up
+Mar.9th-10th: Figured out how to properly use GraphQL + set up Typescript in my project. I want to make it nice for scaling by setting up types like PotentialData, so for future queries, just need to add onto the number of types + what we expect the response to look like. Tomorrow I'll start working on the actual parts of the project ie displaying events, filtering, searching, etc. I will be saving time by using React Bootstrap for the CSS.
