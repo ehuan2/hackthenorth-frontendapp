@@ -9,6 +9,18 @@ export async function getEvents(): Promise<TEndpointResponse> {
             events {
                 id
                 name
+                event_type
+                permission
+                start_time
+                end_time
+                description
+                speakers {
+                    name
+                    profile_pic
+                }
+                public_url
+                private_url
+                related_events
             }
         }`,
         variables: {}
@@ -17,10 +29,12 @@ export async function getEvents(): Promise<TEndpointResponse> {
     const data: TEventsResponse = await graphqlQuery(graphql) as TEventsResponse;
 
     // request went through, time to parse data
-    const event: TEndpointResponse | undefined = data?.events;
+    let event: TEndpointResponse | undefined = data?.events;
     console.log(JSON.stringify(event));
 
     if (event) {
+        // we want to sort it based on time right from the get go
+        event = event.sort((a, b) => (a.start_time - b.start_time));
         return event;
     }
 

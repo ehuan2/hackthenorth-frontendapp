@@ -34,8 +34,8 @@ a {
 
 
 .card {
-    height: 350px;
-    width: 400px;
+    height: 375px;
+    width: 425px;
     min-width: 250px;
     padding: 1.5rem;
     border-radius: 16px;
@@ -75,7 +75,7 @@ a {
 
 .card-header h2 {
     font-size: 20px;
-    margin: .25rem 0 auto;
+    margin: .2rem 0 auto;
     text-decoration: none;
     color: inherit;
     border: 0;
@@ -141,7 +141,7 @@ a {
 }
 
 .tags {
-    margin: 1rem 0 2rem;
+    margin: 0.5rem 0 2rem;
     padding: .5rem 0 1rem;
     line-height: 2;
     margin-bottom: 0;

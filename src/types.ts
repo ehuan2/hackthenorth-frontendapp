@@ -3,6 +3,15 @@
 // have a look at the sample data by visiting the endpoint above.
 // Note: You DO NOT have to use typescript in your submission!
 
+// enums for checking later
+export enum PermissionTypeEnum {
+  PUBLIC = "public", PRIVATE = "private"
+};
+
+export enum EventTypeEnum {
+  WORKSHOP = "workshop", ACTIVITY = "activity", TECH_TALK = "tech_talk"
+}
+
 // Each event will belong to one of the following types
 type TEventType = "workshop" | "activity" | "tech_talk";
 type TPermission = "public" | "private";
