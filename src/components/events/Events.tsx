@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { PermissionTypeEnum, TEndpointResponse, TEvent, TSpeaker } from '../../types';
-import { getEvents } from './eventFetch';
+import { getDateString, getEvents } from './eventUtils';
 import "./EventCard.css"
 
 // the login imports stuff
@@ -13,7 +13,7 @@ interface EventProps {
 }
 
 // changes a single speaker to their profile picture tsx
-const SpeakerToProfileTsx = (speaker: TSpeaker, key: number) => {
+export const SpeakerToProfileTsx = (speaker: TSpeaker, key: number) => {
     return (
         <div key={key}>
             <>
@@ -29,10 +29,10 @@ const SpeakerToProfileTsx = (speaker: TSpeaker, key: number) => {
 }
 
 // the tsx for displaying a single card, time at top, event name + public link, hosts and link at bottom
-const EventCard = (props: EventProps) => {
+export const EventCard = (props: EventProps) => {
 
     const { event } = props;
-    const { speakers, private_url, permission } = event;
+    const { speakers, private_url, public_url, permission } = event;
 
     // gets the logged in user
     const [user] = useAuthState(auth);
@@ -42,19 +42,13 @@ const EventCard = (props: EventProps) => {
         return null;
     }
 
-    // from fetching at the graphql, converts to a time string
-    function getDateString(time: number) {
-        const timeConst = new Date(time);
-        return `${timeConst.toDateString()} ${timeConst.toLocaleTimeString()}`;
-    }
-
     // got the css from fireship :)
     return (
         <article className="card">
             <header className="card-header">
                 <p>Start: {getDateString(event.start_time)}</p>
                 <p>End: {getDateString(event.end_time)}</p>
-                <a href={event?.public_url}><h2>{event.name}</h2></a>
+                <a href={`/event/${event.id}`}><h2>{event.name}</h2></a>
             </header>
 
             {speakers &&
@@ -68,20 +62,26 @@ const EventCard = (props: EventProps) => {
                 </div>
             }
 
-            {user && private_url &&
-                // displaying the private url
-                <div className="tags"> <a href={private_url}>Private Link</a> </div>
-            }
+            <div className="tags">
+                {user && (private_url) &&
+                    // displaying the private url
+                    <a href={private_url}>Private Link</a>
+                }
+                {public_url && <a href={public_url}>Public Link</a>}
+            </div>
 
         </article>
     )
 }
 
 interface EventsProps {
+    fetchData: Function
 }
 
-// for displaying all events
+// for displaying all events, using the fetchData from props
 export const Events = (props: EventsProps) => {
+
+    const { fetchData } = props;
 
     const [events, setEvents]: [TEndpointResponse, any] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -90,13 +90,14 @@ export const Events = (props: EventsProps) => {
     useEffect(() => {
 
         // we need to fetch the events asynchronously
-        async function fetchData() {
+        async function asyncGet() {
             setLoading(true); // we set loading to true, which will display
-            setEvents(await getEvents()); // actually, getEvents already sorts it based on time
+            setEvents(await fetchData()); // actually, getEvents already sorts it based on time
+            console.table(events);
             setLoading(false);
         }
 
-        fetchData();
+        asyncGet();
 
     }, [])
 

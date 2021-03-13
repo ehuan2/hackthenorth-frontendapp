@@ -2,6 +2,12 @@
 import { TEventByIdResponse, TEventsResponse, graphqlQuery } from "../fetch";
 import { TEndpointResponse, TEvent } from "../../types";
 
+// from fetching at the graphql, converts to a time string
+export function getDateString(time: number) {
+    const timeConst = new Date(time);
+    return `${timeConst.toDateString()} ${timeConst.toLocaleTimeString()}`;
+}
+
 export async function getEvents(): Promise<TEndpointResponse> {
 
     var graphql = JSON.stringify({
@@ -49,6 +55,18 @@ export async function getEventById(id: number): Promise<TEvent> {
             event(id: ${id}) {
                 id
                 name
+                event_type
+                permission
+                start_time
+                end_time
+                description
+                speakers {
+                    name
+                    profile_pic
+                }
+                public_url
+                private_url
+                related_events
             }
         }`,
         variables: { id }

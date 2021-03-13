@@ -38,3 +38,6 @@ Ended up deciding to use Firebase for login (although we don't require this step
 From my experience, we could either store the login details using cookies and such in the browser, and check they exist or use state management. I decided to use a prebuilt stuff, using Firebase to lighten and speed up the process.
 
 All changes today: Got displaying events working, got a nav bar, got it sorted based on time, and login with firebase works (and hiding private events). Next challenge will be searching, and filtering -- for filtering, maybe some sort of pop up that does it? Overall, this project is pretty good in terms of how it's going (best styling I've ever done).
+
+Mar.13th: Working on part 4 of project + additional functionality
+For 4, I am thinking of doing /event/:id -- for an actual product, I would like to somehow hash this (or rather yet, have the backend hash it)
