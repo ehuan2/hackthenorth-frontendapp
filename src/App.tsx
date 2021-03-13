@@ -5,13 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // router stuff
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// fetching events function
-import { getEvents } from "./components/events/eventUtils";
-
 // components used
-import { Events } from './components/events/Events';
 import { MyNavbar } from './components/MyNavbar';
 import { EventPage } from './components/events/EventPage';
+import { EventsSearch } from "./components/events/EventsSearch";
 
 function App() {
   // so App entry will really just serve as a way to redirect stuff
@@ -29,7 +26,7 @@ function App() {
 
           {/* home path, display events */}
           <Route path="/">
-            <Events fetchData={getEvents}/>
+            <EventsSearch />
           </Route>
 
         </Switch>

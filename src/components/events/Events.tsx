@@ -71,6 +71,7 @@ export const EventCard = (props: EventProps) => {
                 }
 
                 {public_url && <a href={public_url}>Public Link</a>}
+                <a href={`/?eventtype=${event.event_type}`}>{event.event_type}</a>
             </div>
 
         </article>
