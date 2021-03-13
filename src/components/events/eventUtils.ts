@@ -1,4 +1,4 @@
-
+// imports important abstractions
 import { TEventByIdResponse, TEventsResponse, graphqlQuery } from "../fetch";
 import { TEndpointResponse, TEvent } from "../../types";
 
@@ -8,8 +8,10 @@ export function getDateString(time: number) {
     return `${timeConst.toDateString()} ${timeConst.toLocaleTimeString()}`;
 }
 
+// gets all the events and the necessary information to display them all
 export async function getEvents(): Promise<TEndpointResponse> {
 
+    // what our query looks like -- edit fields for other information
     var graphql = JSON.stringify({
         query: `query getEvents {
             events {
@@ -19,14 +21,12 @@ export async function getEvents(): Promise<TEndpointResponse> {
                 permission
                 start_time
                 end_time
-                description
                 speakers {
                     name
                     profile_pic
                 }
                 public_url
                 private_url
-                related_events
             }
         }`,
         variables: {}
@@ -36,18 +36,20 @@ export async function getEvents(): Promise<TEndpointResponse> {
 
     // request went through, time to parse data
     let event: TEndpointResponse | undefined = data?.events;
-    console.log(JSON.stringify(event));
 
     if (event) {
-        // we want to sort it based on time right from the get go
+        // we want to sort it based on time right from the get go -- sort takes in a comparator function
         event = event.sort((a, b) => (a.start_time - b.start_time));
         return event;
     }
 
+    // if the events for some reason don't exist, throw an error
     return Promise.reject(new Error("Events not found"));
 
 }
 
+
+// gets the event by its id number, 1 to 15 for this specific api
 export async function getEventById(id: number): Promise<TEvent> {
 
     var graphql = JSON.stringify({
@@ -76,7 +78,6 @@ export async function getEventById(id: number): Promise<TEvent> {
 
     // request went through, time to parse data
     const event: TEvent | undefined = data?.event;
-    console.log(JSON.stringify(event));
 
     if (event) {
         return event;

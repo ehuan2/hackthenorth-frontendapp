@@ -1,13 +1,13 @@
+// this here will display /event/:id
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Redirect, useParams } from 'react-router'
 import { auth } from '../../firebase-init';
+
 import { EventTypeEnum, PermissionTypeEnum, TEndpointResponse, TEvent } from '../../types';
 import { Events, SpeakerToProfileTsx } from './Events';
 import { getDateString, getEventById } from './eventUtils';
-
-interface Props {
-}
 
 // an empty event so useState will work
 const emptyEvent: TEvent = {
@@ -21,14 +21,19 @@ const emptyEvent: TEvent = {
     related_events: []
 }
 
+interface Props {
+}
+
 // the page to display each separate event
 export const EventPage = (props: Props) => {
 
+    // this is the id from /event/:id
     let { id }: any | null = useParams();
 
     const [event, setEvent]: [TEvent, any] = useState(emptyEvent);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+
     const [user] = useAuthState(auth);
 
     // on load, get the event
@@ -60,7 +65,7 @@ export const EventPage = (props: Props) => {
         return <>Private Event</>;
     }
 
-    // it'll get all the related events
+    // it'll get all the related events -- meant to pass into Events component
     async function getRelatedEvents() {
         let events: TEndpointResponse = [];
 
@@ -81,6 +86,7 @@ export const EventPage = (props: Props) => {
 
     return (
         <>
+            {/* actual event */}
             <section className="card-list">
                 <article id="eventpage">
                     <header className="card-header">
@@ -112,6 +118,8 @@ export const EventPage = (props: Props) => {
 
                 </article>
             </section>
+
+            {/* related events */}
             <Events fetchData={getRelatedEvents} />
         </>
 

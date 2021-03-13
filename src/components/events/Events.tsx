@@ -1,16 +1,12 @@
+// this module here is meant to display the home route, displays events in chronological order
 import React, { useState, useEffect } from 'react'
 import { PermissionTypeEnum, TEndpointResponse, TEvent, TSpeaker } from '../../types';
-import { getDateString, getEvents } from './eventUtils';
+import { getDateString } from './eventUtils';
 import "./EventCard.css"
 
 // the login imports stuff
 import { auth } from '../../firebase-init';
 import { useAuthState } from 'react-firebase-hooks/auth'
-
-// this module here is meant to display the home route, displays events in chronological order
-interface EventProps {
-    event: TEvent
-}
 
 // changes a single speaker to their profile picture tsx
 export const SpeakerToProfileTsx = (speaker: TSpeaker, key: number) => {
@@ -26,6 +22,10 @@ export const SpeakerToProfileTsx = (speaker: TSpeaker, key: number) => {
             </>
         </div>
     );
+}
+
+interface EventProps {
+    event: TEvent
 }
 
 // the tsx for displaying a single card, time at top, event name + public link, hosts and link at bottom
@@ -45,6 +45,7 @@ export const EventCard = (props: EventProps) => {
     // got the css from fireship :)
     return (
         <article className="card">
+
             <header className="card-header">
                 <p>Start: {getDateString(event.start_time)}</p>
                 <p>End: {getDateString(event.end_time)}</p>
@@ -62,11 +63,13 @@ export const EventCard = (props: EventProps) => {
                 </div>
             }
 
+            {/* displaying the links to stuff */}
             <div className="tags">
                 {user && (private_url) &&
-                    // displaying the private url
+                    // only display if logged in
                     <a href={private_url}>Private Link</a>
                 }
+
                 {public_url && <a href={public_url}>Public Link</a>}
             </div>
 
@@ -74,6 +77,7 @@ export const EventCard = (props: EventProps) => {
     )
 }
 
+// so our Events tsx actually allows us to change what it fetches, through fetchData function
 interface EventsProps {
     fetchData: Function
 }
@@ -83,6 +87,7 @@ export const Events = (props: EventsProps) => {
 
     const { fetchData } = props;
 
+    // states for loading, and all the events
     const [events, setEvents]: [TEndpointResponse, any] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -93,7 +98,6 @@ export const Events = (props: EventsProps) => {
         async function asyncGet() {
             setLoading(true); // we set loading to true, which will display
             setEvents(await fetchData()); // actually, getEvents already sorts it based on time
-            console.table(events);
             setLoading(false);
         }
 
@@ -105,6 +109,7 @@ export const Events = (props: EventsProps) => {
         return <>...loading</>;
     }
 
+    // maps every event to the necessary tsx
     return (
         <section className="card-list">
             {events &&
