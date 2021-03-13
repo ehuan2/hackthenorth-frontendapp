@@ -8,6 +8,9 @@ Run
 
 Go to http://localhost:3000.
 
+## Functionality
+Login with Google (Firebase), searching based on name keyword, filtering based on one type of event, events sorted based on start time, and linking to each event.
+
 ## Write Up
 1. Development Process:
 
@@ -15,18 +18,20 @@ I know that I didn't have too too much time making a great project, so I went wi
 ### Structure and Design:
 I'm not all too familiar with all the best practices, but on a personal level, I like to split up my React project such that we have the main components under a components folder, the global types and necessary initializations (like firebase-init) directly under src. Then for each type of related components, I like to put them all under the same folder. For example, here we have events under the same folder, and if I were to extend this to say User Profiles, then it'd be under another folder called user/. 
 
+For the CSS, I just simply put it inside the same folder instead of separating it out based on file type.
+
 I also put in a fetch.ts which acts as an interface for other calls so that I don't have to remember the graphql fetch request syntax. Inside the events folder as well, I have eventUtils which creates the functions that utilize fetch, as well as other helper functions like converting dates to strings. 
 
 In terms of how the tsx is organized, I realize that I can probably improve on it. I'm at a point where there are similar components being used in both of them, but not enough that I can separate the similar components up. That's the problem with organizing - you have to have enough files so that each file can be relatively small, but not too many that it gets confusing about what depends on what.
 
 ### Tools Used:
-So I really only choose React because of how comfortable I was with it. I had done previous frontend experience using it, so I was most comfortable with it. I also choose Firebase for the login because the hooks you can use make it really easy to handle the auth. I choose React Bootstrap (even if it's very bloaty) because it makes development really fast, and makes it look nice without me having to fiddle around with the css constantly.
+So I really only choose React because of how comfortable I was with it. I had done previous frontend experience using it, so I was most comfortable with it. I also choose Firebase for the login because the hooks you can use make it really easy to handle the auth. I choose React Bootstrap (even if it's very bloaty) because it makes development really fast, and makes it look nice without me having to fiddle around with the css constantly. I realize there are other tools that could probably be better in terms of how they manage state, but for speed and efficiency, I went with react.
 
 ### Problems Encountered:
-This was the first time I used GraphQL, and so figuring out the fact that I don't get all the information at once and wondering why my program was wrong definitely created its setbacks. After I realized my mistakes, it was pretty much smooth sailing. I also wasn't the best at Typescript, and there are parts in my project where it is a little iffy (creating an emptyEvent, pretty sure there's another way to use the useState hook without doing what I did), but overall not too many problems.
+This was the first time I used GraphQL, and so figuring out the fact that I don't get all the information at once and wondering why my program was wrong definitely created its setbacks. I also wasn't the best at Typescript, and there are parts in my project where it is a little iffy (creating an emptyEvent, pretty sure there's another way to use the useState hook without doing what I did). I also had a huge issue with searching and querying from the NavBar. There was an issue where I couldn't redirect from the navbar, or if I did it would disappear due to how React rerenders.
 
 ### Solutions to Problems:
-The way I debug frontend isn't necessarily the best, I realize there are unit tests, but the way I do it was simply to test it out using `yarn start`.
+The way I debug frontend isn't necessarily the best, I realize there are unit tests, but the way I do it was simply to test it out using `yarn start`. For the searching and querying, I couldn't find a solution with the time I spent, but if I dug deeper, I'm sure I would find a solution.
 
 ### Proud of:
 To be honest, this was the first project where the CSS (although it's mainly copied from Fireship and React Bootstrap) turned out really well. It's also great that I could just simply write more comfortably in Typescript, and the autocompletion really makes it worth it. Figuring out as well proper error catching was great. All in all, I'm just proud to create a project that turned out so well when I didn't have too too much time to work on it.
@@ -34,7 +39,7 @@ To be honest, this was the first project where the CSS (although it's mainly cop
 2. Additional Time
 For additional time, I think I would rework my structure a little bit, and make it easier for others to scale on it. There are some places, like the loading for example, that can be recreated as a wrapper component to not necessarily need three if statements before the main component that I want to show.
 
-If I had more time, I would like to improve on the searching and filtering. As it is right now, I can filter for a single type of event (not multiple) and doesn't work with searching because of my frustrations with the navbar search bar.
+If I had more time, I would like to improve on the searching and filtering. As it is right now, I can filter for a single type of event (not multiple) and doesn't work with searching. Getting these working would be great if I had more time.
 
 I would also spend more time making it look nicer on other devices. I tested this in the phone browser (which you can simulate from inspect element), and it is quite frankly terrible on phones.
 
@@ -62,4 +67,4 @@ For 4, I am thinking of doing /event/:id -- for an actual product, I would like 
 
 Alright! So I got all four things done, I will be working on some extra functionality + cleaning up. I will allow for searching now for a specific event, based on a keyword in the title.
 
-Encountered quite a few problems when trying to do searching. For some reason, when you search in the navbar, it'll remove the navbar because once the form submits it redirects to a new component that doesn't have the navbar, but simply placing the navbar in doesn't seem to do the trick. Ended up getting frustrated, and just made the button a link.
+Encountered quite a few problems when trying to do searching. For some reason, when you search in the navbar, it'll remove the navbar because once the form submits it redirects to a new component that doesn't have the navbar, but simply placing the navbar in doesn't seem to do the trick. Ended up just making the button a link.
