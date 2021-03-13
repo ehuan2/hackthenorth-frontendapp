@@ -34,6 +34,10 @@ To be honest, this was the first project where the CSS (although it's mainly cop
 2. Additional Time
 For additional time, I think I would rework my structure a little bit, and make it easier for others to scale on it. There are some places, like the loading for example, that can be recreated as a wrapper component to not necessarily need three if statements before the main component that I want to show.
 
+If I had more time, I would like to improve on the searching and filtering. As it is right now, I can filter for a single type of event (not multiple) and doesn't work with searching because of my frustrations with the navbar search bar.
+
+I would also spend more time making it look nicer on other devices. I tested this in the phone browser (which you can simulate from inspect element), and it is quite frankly terrible on phones.
+
 In terms of other functionality, I would want to look into how to persist the order of events across refreshes. As it is right now, I'm not familiar with how to do that, but I was thinking of either storing it as a cookie or simply in memory which does persist.
 
 Also being able to create a good filter that gives a good UX (usually filters aren't that fun to use), would be great to have.
@@ -57,3 +61,5 @@ Mar.13th: Working on part 4 of project + additional functionality
 For 4, I am thinking of doing /event/:id -- for an actual product, I would like to somehow hash this (or rather yet, have the backend hash it)
 
 Alright! So I got all four things done, I will be working on some extra functionality + cleaning up. I will allow for searching now for a specific event, based on a keyword in the title.
+
+Encountered quite a few problems when trying to do searching. For some reason, when you search in the navbar, it'll remove the navbar because once the form submits it redirects to a new component that doesn't have the navbar, but simply placing the navbar in doesn't seem to do the trick. Ended up getting frustrated, and just made the button a link.
